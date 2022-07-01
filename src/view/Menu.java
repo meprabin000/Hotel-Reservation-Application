@@ -20,13 +20,27 @@ public abstract class Menu {
     public abstract boolean executeOption(int option);
     public abstract void start();
 
-    public static <T> void displayCollection(Collection<T> collection) {
+    public static <T> void displayCollection(Collection<T> collection, String message) {
         int i = 1;
+        if (collection == null || collection.isEmpty()) {
+            log("Nothing to show.");
+            return;
+        }
+        if(message != null)
+            log(message);
         System.out.println("------------------------------------------");
         for(T element: collection) {
             System.out.println(String.format("%d. %s", i++, element));
         }
         System.out.println("------------------------------------------");
+    }
+
+    public static Date addDays(Date date, int numDays) {
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, numDays);
+        return cal.getTime();
     }
 
     public static boolean getBooleanInput(String message) {
@@ -35,7 +49,7 @@ public abstract class Menu {
         String input = "";
         do {
             try {
-                input = scanner.nextLine().toLowerCase(Locale.ROOT);
+                input = scanner.nextLine().toLowerCase();
             }
             catch(Exception ex) {
                 System.out.println("Invalid input. Please enter y for yes or n for no.");
@@ -50,6 +64,7 @@ public abstract class Menu {
         Scanner scanner = new Scanner(System.in);
         do {
             try {
+                log(message);
                 email = scanner.nextLine();
             }
             catch(Exception e) {
@@ -109,7 +124,7 @@ public abstract class Menu {
     public static void display(Menu menu) {
         List<MenuItem> menuItems = menu.getMenuItems();
         System.out.println(menu.name.toUpperCase() + " MENU");
-        displayCollection(menuItems);
+        displayCollection(menuItems, null);
     }
 
     public static void log(String message) {

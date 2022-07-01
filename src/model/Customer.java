@@ -56,10 +56,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return String.format("FirstName: %s, LastName: %s, Email: %s", firstName, lastName, email);
     }
 }

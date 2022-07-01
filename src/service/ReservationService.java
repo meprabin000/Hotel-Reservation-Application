@@ -3,27 +3,22 @@ package service;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 public class ReservationService {
-    static Collection<Reservation> allReservations;
-    static Collection<IRoom> allRooms;
-
-    public ReservationService() {
-        allReservations = new ArrayList<>();
-        allRooms = new ArrayList<>();
-    }
+    static Collection<Reservation> allReservations = new ArrayList<>();
+    static Collection<IRoom> allRooms = new ArrayList<>();
 
     public static void addRoom(IRoom room) {
+        if(room == null) return;
         allRooms.add(room);
     }
 
     public static IRoom getARoom(String roomId) {
+        if(allRooms == null || allRooms.isEmpty()) return null;
         for(IRoom room: allRooms) {
             if(room.getRoomNumber().equals(roomId)) {
                 return room;
@@ -39,12 +34,11 @@ public class ReservationService {
     }
 
     public static Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
-        Collection<IRoom> availableRooms = new ArrayList<>();
-        if (availableRooms.isEmpty()) return null;
+        Collection<IRoom> availableRooms = new ArrayList<>(allRooms);
         for(Reservation reservation: allReservations) {
-            if(!reservation.isReserved(checkInDate, checkOutDate)) availableRooms.add(reservation.getRoom());
+            if(reservation.isReserved(checkInDate, checkOutDate)) availableRooms.remove(reservation.getRoom());
         }
-        return availableRooms;
+        return availableRooms.isEmpty() ? null: availableRooms;
     }
 
     public static Collection<Reservation> getCustomersReservation(Customer customer) {

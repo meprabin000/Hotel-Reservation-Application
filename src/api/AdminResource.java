@@ -15,6 +15,7 @@ public class AdminResource {
     }
 
     public static void addRoom(List<IRoom> rooms) {
+        if(rooms == null || rooms.isEmpty()) return;
         for(IRoom room: rooms)
             ReservationService.addRoom(room);
     }
@@ -27,7 +28,7 @@ public class AdminResource {
         return CustomerService.getAllCustomers();
     }
 
-    public void displayAllReservations() {
+    public static void displayAllReservations() {
         ReservationService.printAllReservation();
     }
 }

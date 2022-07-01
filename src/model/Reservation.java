@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Reservation {
@@ -33,8 +34,8 @@ public class Reservation {
 
     public boolean isReserved(Date checkInDate, Date checkOutDate) {
         if(checkInDate.before(this.checkInDate)) {
-            if(checkOutDate.before(this.checkInDate)) return true;
-            return false;
+            if(checkOutDate.before(this.checkInDate)) return false;
+            return true;
         }
         else
         {
@@ -47,11 +48,9 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "customer=" + customer +
-                ", room=" + room +
-                ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
-                '}';
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+        return String.format("Reservation: \nCustomer: %s\nRoom: %s\ncheckInDate: %s\ncheckOutDate: %s\n",
+                customer, room, formatter.format(checkInDate), formatter.format(checkOutDate));
     }
 }

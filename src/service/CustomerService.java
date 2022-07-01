@@ -9,11 +9,8 @@ import java.util.List;
 
 public class CustomerService {
 
-    static Collection<Customer> customers;
+    static Collection<Customer> customers = new ArrayList<>();
 
-    public CustomerService() {
-        customers = new ArrayList<>();
-    }
 
     public static void addCustomer(String email, String firstName, String lastName) {
         customers.add(new Customer(firstName, lastName, email));
