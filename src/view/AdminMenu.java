@@ -53,6 +53,7 @@ public class AdminMenu extends Menu {
     private void getARoomInput() {
         List<IRoom> rooms = new ArrayList<>();
         do {
+            rooms = new ArrayList<>();
             String roomId = "";
             double price;
             int roomType;
@@ -70,8 +71,9 @@ public class AdminMenu extends Menu {
                 roomType = getInteger("Enter room type: 1 for single bed, 2 for double bed");
             } while (roomType != 1 && roomType != 2);
             rooms.add(new Room(roomId, price, roomType == 1 ? RoomType.SINGLE : RoomType.DOUBLE));
+            AdminResource.addRoom(rooms);
         }while(getBooleanInput("Do you want to add another room?"));
-        AdminResource.addRoom(rooms);
+
     }
 
     public void addMenuItems() {
